@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import CropRecommendation from "./pages/CropRecommendation";
 import Reports from "./pages/Reports";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/crop-recommendation" element={<CropRecommendation />} />
               <Route path="/reports" element={<Reports />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
