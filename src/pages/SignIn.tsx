@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
     });
     
     setIsLoading(false);
-    navigate('/');
+    navigate('/dashboard');
   };
 
   return (
@@ -146,13 +146,6 @@ const SignIn: React.FC = () => {
               {t('signUp')}
             </Link>
           </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="mt-6 text-center">
-          <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            ← {t('backToHome')}
-          </Link>
         </div>
       </div>
     </div>
