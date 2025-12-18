@@ -115,6 +115,9 @@ export const translations = {
     minCharacters: "At least 8 characters",
     hasUppercase: "One uppercase letter",
     hasNumber: "One number",
+    logout: "Logout",
+    logoutSuccess: "Logged out successfully",
+    logoutMessage: "You have been logged out. See you soon!",
     
     // Chatbot responses
     chatResponses: {
@@ -245,6 +248,9 @@ export const translations = {
     minCharacters: "कम से कम 8 अक्षर",
     hasUppercase: "एक बड़ा अक्षर",
     hasNumber: "एक नंबर",
+    logout: "लॉगआउट",
+    logoutSuccess: "सफलतापूर्वक लॉगआउट किया",
+    logoutMessage: "आप लॉगआउट हो गए हैं। जल्द मिलते हैं!",
     
     // Chatbot responses
     chatResponses: {
@@ -375,6 +381,9 @@ export const translations = {
     minCharacters: "ઓછામાં ઓછા 8 અક્ષરો",
     hasUppercase: "એક મોટો અક્ષર",
     hasNumber: "એક નંબર",
+    logout: "લૉગઆઉટ",
+    logoutSuccess: "સફળતાપૂર્વક લૉગઆઉટ થયું",
+    logoutMessage: "તમે લૉગઆઉટ થયા છો. જલ્દી મળીશું!",
     
     // Chatbot responses
     chatResponses: {
