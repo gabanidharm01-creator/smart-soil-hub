@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Sprout, FileText, LogOut, ChevronLeft, ChevronRight, Globe, Sun, Moon, Monitor, IndianRupee } from 'lucide-react';
+import { LayoutDashboard, Sprout, FileText, LogOut, ChevronLeft, ChevronRight, Globe, Sun, Moon, Monitor, IndianRupee, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
@@ -28,6 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   const navItems = [
     { to: '/dashboard', icon: LayoutDashboard, label: t('dashboard') },
     { to: '/crop-recommendation', icon: Sprout, label: t('cropRecommendation') },
+    { to: '/weather-alerts', icon: AlertTriangle, label: '🌦️ Weather Alerts' },
     { to: '/profit-subsidy-analysis', icon: IndianRupee, label: t('profitSubsidyAnalysis') },
     { to: '/reports', icon: FileText, label: t('reports') },
   ];
