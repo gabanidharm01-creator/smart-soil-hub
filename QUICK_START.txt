@@ -1,0 +1,127 @@
+# ⚡ QUICK REFERENCE - START HERE!
+
+## 🚀 Start System (Pick One)
+
+### Option A: Windows Batch (Easiest) ⭐
+```
+1. Double-click: START_ALL.bat
+2. Open: http://localhost:5000
+3. Done! ✅
+```
+
+### Option B: PowerShell
+```powershell
+1. Run: .\START_ALL.ps1
+2. Open: http://localhost:5000
+3. Done! ✅
+```
+
+### Option C: Manual (3 Terminals)
+```bash
+# Terminal 1
+cd Crop-Recommendation-System-Using-Machine-Learning
+python ml_api.py
+
+# Terminal 2
+cd backend
+npm start
+
+# Terminal 3
+Open browser: http://localhost:5000
+```
+
+---
+
+## 📋 Once Running
+
+1. **Go to:** http://localhost:5000
+2. **Click:** Crop Recommendation
+3. **Enter values:**
+   ```
+   N:          50 mg/kg
+   P:          35 mg/kg
+   K:         180 mg/kg
+   pH:        6.5
+   Temp:       25 °C
+   Humidity:   65 %
+   Rainfall:  150 mm
+   ```
+4. **Click:** "Get Recommendation"
+5. **See:** Crop suggestion! 🌾
+
+---
+
+## 🔴 Issues?
+
+### Backend won't start
+```bash
+cd backend
+npm install
+npm start
+```
+
+### ML API won't start
+```bash
+cd Crop-Recommendation-System-Using-Machine-Learning
+pip install -r requirements.txt
+python ml_api.py
+```
+
+### Port conflicts
+- Kill process on port 5000: Check Task Manager
+- Or change PORT in backend/.env
+
+### Still stuck?
+```bash
+python diagnose.py
+# OR
+python test_system.py
+```
+
+---
+
+## 🌐 System URLs
+
+| Component | URL | Purpose |
+|-----------|-----|---------|
+| Frontend | http://localhost:5000 | Web interface |
+| Backend API | http://localhost:5000/api/* | API endpoints |
+| ML API | http://localhost:5001/predict | Crop predictions |
+
+---
+
+## 📊 System Flow
+
+```
+You enter soil data
+       ↓
+Frontend sends to Backend
+       ↓
+Backend calls ML API
+       ↓
+ML model predicts crop
+       ↓
+Result shown in Frontend
+```
+
+---
+
+## ✅ Check if Working
+
+Open browser console (F12) and check:
+- ✅ No red errors
+- ✅ Page loads
+- ✅ Can enter numbers
+- ✅ Get crop recommendation
+
+---
+
+## 📞 Help
+
+1. Read: `SETUP_GUIDE.md`
+2. Run: `diagnose.py`
+3. Check: Server logs in each terminal
+
+---
+
+**That's it! Enjoy! 🌾🎉**

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sprout, Sparkles, Leaf, FlaskConical, Zap, Droplets, Thermometer, Cloud, RotateCcw, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sprout, Sparkles, Leaf, FlaskConical, Zap, Droplets, Thermometer, Cloud, RotateCcw, Check, Gauge } from 'lucide-react';
 import MainLayout from '@/components/Layout/MainLayout';
 import Chatbot from '@/components/Chatbot/Chatbot';
 import { Button } from '@/components/ui/button';
@@ -9,54 +9,137 @@ import { Slider } from '@/components/ui/slider';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getCropRecommendation, getDefaultRecommendation, CropRecommendation } from '@/lib/cropRecommendation';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/components/ui/use-toast';
 
 const CropRecommendationPage: React.FC = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [inputs, setInputs] = useState({
-    nitrogen: 50,
-    phosphorus: 35,
-    potassium: 180,
-    moisture: 55,
+    N: 50,
+    P: 35,
+    K: 180,
+    ph: 6.5,
     temperature: 25,
     humidity: 65,
+    rainfall: 150,
   });
   const [recommendation, setRecommendation] = useState<CropRecommendation | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [mlResponse, setMlResponse] = useState<string>('');
 
   const handleInputChange = (key: keyof typeof inputs, value: number) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsLoading(true);
-    
-    // Simulate processing
-    setTimeout(() => {
-      const result = getCropRecommendation(inputs) || getDefaultRecommendation();
+    try {
+      const response = await fetch('/api/crop-recommendation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          N: inputs.N,
+          P: inputs.P,
+          K: inputs.K,
+          ph: inputs.ph,
+          temperature: inputs.temperature,
+          humidity: inputs.humidity,
+          rainfall: inputs.rainfall,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get recommendation from backend');
+      }
+
+      const data = await response.json();
+      
+      // Store ML response
+      setMlResponse(JSON.stringify(data, null, 2));
+      
+      // Show toast notification
+      toast({
+        title: "✅ Crop Recommendation Received!",
+        description: `ML API returned: ${data.recommended_crop}`,
+        duration: 5000,
+      });
+      
+      // Map the backend response to the frontend display format
+      const result: CropRecommendation = {
+        crop: data.recommended_crop || 'Unknown',
+        confidence: 85,
+        emoji: '🌾',
+        reasons: [
+          'Optimal soil NPK levels for this crop',
+          'Temperature and humidity conditions are favorable',
+          'Rainfall pattern suits this crop',
+          'pH level is appropriate for growth'
+        ],
+        fertilizers: [
+          { name: 'NPK 10-26-26', ratio: '1:2.6:2.6', timing: 'At planting' },
+          { name: 'Urea', ratio: '46% N', timing: 'Top dress at 30-40 days' }
+        ],
+        tips: [
+          'Monitor soil moisture regularly',
+          'Apply irrigation at critical growth stages',
+          'Scout for pests and diseases weekly',
+          'Harvest at optimal maturity stage'
+        ]
+      };
+      
       setRecommendation(result);
+    } catch (error) {
+      console.error('Crop recommendation error:', error);
+      
+      // Show error toast
+      toast({
+        title: "⚠️ Error Getting Recommendation",
+        description: "Using local fallback. Check if ML API is running.",
+        variant: "destructive",
+        duration: 5000,
+      });
+      
+      // Fallback to local recommendation on error
+      const cropInput = {
+        nitrogen: inputs.N,
+        phosphorus: inputs.P,
+        potassium: inputs.K,
+        moisture: inputs.humidity,
+        humidity: inputs.humidity,
+        ph: inputs.ph,
+        temperature: inputs.temperature,
+        rainfall: inputs.rainfall,
+      };
+      const result = getCropRecommendation(cropInput) || getDefaultRecommendation();
+      setRecommendation(result);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleReset = () => {
     setInputs({
-      nitrogen: 50,
-      phosphorus: 35,
-      potassium: 180,
-      moisture: 55,
+      N: 50,
+      P: 35,
+      K: 180,
+      ph: 6.5,
       temperature: 25,
       humidity: 65,
+      rainfall: 150,
     });
     setRecommendation(null);
   };
 
   const inputFields = [
-    { key: 'nitrogen', label: t('nitrogen'), icon: Leaf, unit: 'mg/kg', min: 0, max: 100, color: 'text-green-500' },
-    { key: 'phosphorus', label: t('phosphorus'), icon: FlaskConical, unit: 'mg/kg', min: 0, max: 100, color: 'text-purple-500' },
-    { key: 'potassium', label: t('potassium'), icon: Zap, unit: 'mg/kg', min: 0, max: 400, color: 'text-amber-500' },
-    { key: 'moisture', label: t('moisture'), icon: Droplets, unit: '%', min: 0, max: 100, color: 'text-blue-500' },
+    { key: 'N', label: t('nitrogen'), icon: Leaf, unit: 'mg/kg', min: 0, max: 100, color: 'text-green-500' },
+    { key: 'P', label: t('phosphorus'), icon: FlaskConical, unit: 'mg/kg', min: 0, max: 100, color: 'text-purple-500' },
+    { key: 'K', label: t('potassium'), icon: Zap, unit: 'mg/kg', min: 0, max: 400, color: 'text-amber-500' },
+    { key: 'ph', label: t('pH'), icon: Gauge, unit: 'pH', min: 0, max: 14, step: 0.1, color: 'text-blue-500' },
     { key: 'temperature', label: t('soilTemperature'), icon: Thermometer, unit: '°C', min: 0, max: 50, color: 'text-orange-500' },
     { key: 'humidity', label: t('humidity'), icon: Cloud, unit: '%', min: 0, max: 100, color: 'text-cyan-500' },
+    { key: 'rainfall', label: t('rainfall'), icon: Droplets, unit: 'mm', min: 0, max: 500, color: 'text-blue-500' },
   ];
 
   return (
@@ -184,6 +267,19 @@ const CropRecommendationPage: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Raw Data Display */}
+                {mlResponse && (
+                  <div className="rounded-2xl bg-card/80 backdrop-blur-xl border border-primary/30 p-6 shadow-soft">
+                    <h4 className="font-semibold mb-4 flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      📊 ML API Response Data
+                    </h4>
+                    <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm overflow-auto max-h-40">
+                      <pre className="text-foreground">{mlResponse}</pre>
+                    </div>
+                  </div>
+                )}
 
                 {/* Reasons */}
                 <div className="rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50 p-6 shadow-soft">

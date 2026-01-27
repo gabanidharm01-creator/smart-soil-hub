@@ -59,6 +59,21 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Google Gemini AI (for chatbot)
+
+## Environment Variables
+
+To enable the AI-powered chatbot, you need to set up a Google Gemini API key:
+
+1. Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey) or [MakerSuite](https://makersuite.google.com/app/apikey)
+2. Create a `.env` file in the `frontend` directory
+3. Add the following line:
+   ```
+   VITE_GEMINI_API_KEY=your_api_key_here
+   ```
+4. Restart the development server
+
+**Note:** The chatbot will work in basic mode without the API key, but AI mode requires a valid Gemini API key.
 
 ## How can I deploy this project?
 
