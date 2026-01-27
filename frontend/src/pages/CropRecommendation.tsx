@@ -90,16 +90,16 @@ const CropRecommendationPage: React.FC = () => {
       };
       
       setRecommendation(result);
+      
+      // Show success message
+      toast({
+        title: "🎉 Congratulation!",
+        description: "Successful your ML - model run",
+        duration: 3000,
+        className: "bg-green-500 text-white border-green-600",
+      });
     } catch (error) {
       console.error('Crop recommendation error:', error);
-      
-      // Show error toast
-      toast({
-        title: "⚠️ Error Getting Recommendation",
-        description: "Using local fallback. Check if ML API is running.",
-        variant: "destructive",
-        duration: 5000,
-      });
       
       // Fallback to local recommendation on error
       const cropInput = {

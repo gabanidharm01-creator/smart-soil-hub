@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import CropRecommendation from "./pages/CropRecommendation";
 import Reports from "./pages/Reports";
+import ProfitSubsidyAnalysis from "./pages/ProfitSubsidyAnalysis";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/" element={<Navigate to="/signin" replace />} />
               <Route path="/dashboard" element={<Index />} />
               <Route path="/crop-recommendation" element={<CropRecommendation />} />
+              <Route path="/profit-subsidy-analysis" element={<ProfitSubsidyAnalysis />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />

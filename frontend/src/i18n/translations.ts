@@ -3,6 +3,7 @@ export const translations = {
     // Navigation
     dashboard: "Dashboard",
     cropRecommendation: "Crop Recommendation",
+    profitSubsidyAnalysis: "Profit & Subsidy Analysis",
     reports: "Reports",
     settings: "Settings",
     
@@ -137,6 +138,7 @@ export const translations = {
     // Navigation
     dashboard: "डैशबोर्ड",
     cropRecommendation: "फसल सिफारिश",
+    profitSubsidyAnalysis: "लाभ और सब्सिडी विश्लेषण",
     reports: "रिपोर्ट",
     settings: "सेटिंग्स",
     
@@ -271,6 +273,7 @@ export const translations = {
     // Navigation
     dashboard: "ડેશબોર્ડ",
     cropRecommendation: "પાક ભલામણ",
+    profitSubsidyAnalysis: "લાભ અને સબસિડી વિશ્લેષણ",
     reports: "રિપોર્ટ",
     settings: "સેટિંગ્સ",
     
